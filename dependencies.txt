@@ -1,0 +1,8 @@
+Python modules
+pydub
+deepspech>=0.8
+flask
+
+Other:
+sox
+sylero-models
