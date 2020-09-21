@@ -9,6 +9,7 @@
     "css-animation": "^2.0.4",
     "gh-pages": "^2.1.1",
     "js-video-url-parser": "^0.4.0",
+    "lottie-react-native": "^3.5.0",
     "material-ui-image": "^3.2.1",
     "rc-menu": "^8.7.1",
     "react": "^16.10.2",
@@ -41,5 +42,9 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@babel/plugin-proposal-class-properties": "^7.10.4",
+    "@babel/preset-react": "^7.10.4"
   }
 }

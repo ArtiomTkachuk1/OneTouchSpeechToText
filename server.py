@@ -22,6 +22,7 @@ app.config['DATA_FOLDER'] = DATA_FOLDER
 settings_name="settings.json"
 
 @app.route('/')
+@cross_origin()
 def index():
     return render_template('index.html')
 
@@ -48,6 +49,7 @@ def upload_file_from_ref():
 
 
 @app.route('/get_transcribtion',methods=['GET'])
+@cross_origin()
 def return_data():
     settings_path=os.path.join(app.config['DATA_FOLDER'], settings_name);
     result=main(settings_path)
