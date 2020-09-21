@@ -83,7 +83,7 @@ def core(path_to_args):
     print(path_to_args)
     args=load_args(path_to_args)
     print("args loaded")
-    print(args.audio)
+    print(args.audio,args.t_model)
     args.audio=convert_to_wav(args.audio)
     cut(args.sec, args.audio)
     print("Utils done")

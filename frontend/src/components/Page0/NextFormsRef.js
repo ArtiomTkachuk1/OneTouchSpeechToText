@@ -59,6 +59,7 @@ export function NextFormsRef(props) {
 				t_model:props.nn
 			}
 		})
+		.then(res =>props.set_allow_continue())
 		.catch(err => console.warn(err));
 	}
 

@@ -50,6 +50,7 @@ export function NextFormsFile(props) {
 	const postreq = (formData) => {
 		const axios = require('axios');
 		axios.post("/file_from_form", formData)
+			.then(res =>props.set_allow_continue())
 			.catch(err => console.warn(err));
 	}
 	const handleFileInputChange = (e) => {
