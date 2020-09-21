@@ -12,7 +12,7 @@ from scipy.io import wavfile
 
 
 def main(args):
-    models = OmegaConf.load(os.path.join("models","silero","models.yml"))
+    models = OmegaConf.load(os.path.join("app","models","silero","models.yml"))
     device = torch.device('cpu')
     if args.language == 'German':
         model, decoder = init_jit_model(models.stt_models.de.latest.jit, device=device)

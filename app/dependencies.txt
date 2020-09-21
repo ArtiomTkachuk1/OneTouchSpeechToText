@@ -2,6 +2,7 @@ Python modules
 pydub
 deepspech>=0.8
 flask
+youtube_dl
 
 Other:
 sox
