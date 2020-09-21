@@ -1,5 +1,6 @@
 import React from 'react';
 import {Loader} from "./Loader";
+import {TranscribHolder} from "./TranscribHolder";
 /*const Loader = () => (
   <div class="divLoader">
     <svg class="svgLoader" viewBox="0 0 100 100" width="10em" height="10em">
@@ -15,16 +16,19 @@ export class Page1 extends React.Component{
             loading: true
         }
 		}
-		componentDidMount() {
-			const axios = require('axios');
-			axios.get('http://127.0.0.1:5000/get_transcribtion')
-		          .then(res => {
-		                const data = res.data;
-										console.log(data)
-										this.props.set_transcribtion(data)
-		                this.setState({loading: false })
-		          })
-		}
+		componentDidUpdate() {
+			if((this.props.page===1)&&(this.state.loading===true)){
+				console.log("kra")
+				const axios = require('axios');
+				axios.get('http://127.0.0.1:5000/get_transcribtion', { headers: { "Access-Control-Allow-Origin": "Kra"} })
+			          .then(res => {
+			                const data = res.data;
+											console.log(data)
+											this.props.set_transcribtion(data)
+			                this.setState({loading: false })
+			          })
+				}
+			}
 	render(){
 		if(this.props.page===1){
 			return(
@@ -36,10 +40,13 @@ export class Page1 extends React.Component{
 						margin:"auto"
 					}}
 				>
-          <Loader
-            loading={this.state.loading}
-          />
-					{this.props.transcribtion}
+					<Loader
+						loading={this.state.loading}
+					/>
+					<TranscribHolder
+						loading={this.state.loading}
+						transcribtion={this.props.transcribtion}
+					/>
 				</div>
 			);
 		}
@@ -48,5 +55,7 @@ export class Page1 extends React.Component{
 		}
 	}
 }
+/*
 
-//{this.state.loading ? <Loader /> : null}
+*/
+//{this.props.transcribtion}

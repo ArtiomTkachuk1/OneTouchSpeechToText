@@ -78,11 +78,12 @@ def parse_args():
     return args
 
 
-def main(path_to_args):
+def core(path_to_args):
     #args = parse_args()
+    print(path_to_args)
     args=load_args(path_to_args)
     print("args loaded")
-    print(args)
+    print(args.audio)
     args.audio=convert_to_wav(args.audio)
     cut(args.sec, args.audio)
     print("Utils done")

@@ -2,6 +2,7 @@ import os
 from pydub import AudioSegment
 import youtube_dl
 import json
+import time
 
 class Struct:
     def __init__(self, **entries):
@@ -41,7 +42,24 @@ def convert_to_wav(path_to_media):
             AudioSegment.from_file(path_to_media).export(wav_file_path, format='wav')
     return(audio_path+".wav")
 
+
+
+def set_to_silero(audio_name):
+    sound = AudioSegment.from_file(audio_name)
+    sound = sound.set_channels(1)
+    sound.export(audio_name, format="wav")
+
+def concat_and_save(path,name,path_to_audio,data):
+    print(path_to_audio,"concat_and_save")
+    audio={"audio":path_to_audio}
+    data.update(audio)
+    settings_path=os.path.join(path,name);
+    print(settings_path,"concat_and_save")
+    with open(settings_path, 'w') as json_file:
+        json.dump(data, json_file);
+
 def load_args(path_to_args):
+    print(path_to_args,"load_args")
     with open(path_to_args) as json_file:
         data = json.load(json_file)
         x=data['t_model'].split("/")
@@ -60,16 +78,3 @@ def load_args(path_to_args):
         data['t_scorer_file']=None
         data = Struct(**data)
         return data
-
-def set_to_silero(audio_name):
-    sound = AudioSegment.from_file(audio_name)
-    sound = sound.set_channels(1)
-    sound.export(audio_name, format="wav")
-
-def concat_and_save(path,name,path_to_audio,data):
-    print(path_to_audio)
-    audio={"audio":path_to_audio}
-    data.update(audio)
-    settings_path=os.path.join(path,name);
-    with open(settings_path, 'w') as json_file:
-        json.dump(data, json_file);

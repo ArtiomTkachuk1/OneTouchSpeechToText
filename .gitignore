@@ -1,3 +1,5 @@
 app/models/**/data/
 app/audio/
 app/ту_ду.txt
+upload/
+data/
