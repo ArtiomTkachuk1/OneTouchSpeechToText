@@ -30,7 +30,6 @@ class App extends React.Component{
 		this.state = {
 			page:0,
 			transcribtion:"",
-			allow_continue:false
 		};
 	}
 	set_page_to_1=()=>{
@@ -41,11 +40,6 @@ class App extends React.Component{
 	set_transcribtion=(transcr)=>{
 		this.setState({
 			transcribtion:transcr
-		});
-	}
-	set_allow_continue=()=>{
-		this.setState({
-			allow_continue:true
 		});
 	}
 	componentDidMount() {
@@ -64,14 +58,12 @@ class App extends React.Component{
 				<div>
 					<Page0
 						page={this.state.page}
-						set_allow_continue={this.set_allow_continue}
 						set_page_to_1={this.set_page_to_1}
 					/>
 					<Page1
 						page={this.state.page}
-						allow_continue={this.state.allow_continue}
-						set_transcribtion={this.set_transcribtion}
 						transcribtion={this.state.transcribtion}
+						set_transcribtion={this.set_transcribtion}
 					/>
 				</div>
 			</MuiThemeProvider>

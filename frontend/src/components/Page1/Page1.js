@@ -16,8 +16,8 @@ export class Page1 extends React.Component{
             loading: true
         }
 		}
-		componentDidUpdate() {
-			if((this.props.page===1)&&(this.state.loading===true)&&(this.props.allow_continue==true)){
+		componentDidUpdate(prevProps) {
+			if((this.props.page===1)&&(this.props.page!==prevProps.page)){
 				console.log("kra")
 				const axios = require('axios');
 				axios.get('http://127.0.0.1:5000/get_transcribtion', { headers: { "Access-Control-Allow-Origin": "Kra"} })
@@ -25,7 +25,7 @@ export class Page1 extends React.Component{
 			                const data = res.data;
 											console.log(data)
 											this.props.set_transcribtion(data)
-			                this.setState({loading: false })
+											this.setState({loading: false })
 			          })
 				}
 			}

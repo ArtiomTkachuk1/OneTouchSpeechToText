@@ -112,7 +112,6 @@ export function Page0(props) {
 					<FormHelperText>{helper2}</FormHelperText>
 				</FormControl>
 				<NextFormsRef
-					set_allow_continue={props.set_allow_continue}
 					set_im_src={props.set_im_src}
 					set_page_to_1={props.set_page_to_1}
 					width={width}
@@ -126,7 +125,6 @@ export function Page0(props) {
 					error_mesage_strings={error_mesage_strings}
 				/>
 				<NextFormsFile
-					set_allow_continue={props.set_allow_continue}
 					set_im_src={props.set_im_src}
 					set_page_to_1={props.set_page_to_1}
 					width={width}

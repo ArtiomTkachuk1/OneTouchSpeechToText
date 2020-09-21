@@ -8,7 +8,7 @@ from .utils import (cut,
                     Struct)
 from .models.deepspeech import deepspeech
 from .models.silero import silero
-
+from .corrector.corrector import correct
 '''class Struct:
     def __init__(self, **entries):
         self.__dict__.update(entries)'''
@@ -39,6 +39,8 @@ class Transcribe_Model:
         default_language="English"
         if args.language is None:
             args.language=default_language
+        if args.model_file is None:
+            args.model_file=self.path_to_models
         self.args=args
 
     def run(self):
@@ -79,6 +81,7 @@ def parse_args():
 
 
 def core(path_to_args):
+    print(os.getcwd())
     #args = parse_args()
     print(path_to_args)
     args=load_args(path_to_args)
@@ -86,6 +89,7 @@ def core(path_to_args):
     print(args.audio,args.t_model)
     args.audio=convert_to_wav(args.audio)
     cut(args.sec, args.audio)
+    path_to_corrector=os.path.join("app","corrector")
     print("Utils done")
     args_for_t_model={'audio': args.audio,
                       'language': args.language,
@@ -95,6 +99,8 @@ def core(path_to_args):
     args_for_t_model = Struct(**args_for_t_model)
     t_model=Transcribe_Model(args_for_t_model)
     print("Transcribe_Model loaded")
-    result=t_model.run()
+    raw_text=t_model.run()
     print("Transcribe_Model done")
-    return(result)
+    correct_text=correct(path_to_corrector,raw_text)
+    print("Correction done")
+    return(correct_text)

@@ -45,12 +45,11 @@ export function NextFormsFile(props) {
 	const [video_file, setvideo_file] = React.useState("");
 	const [video_file_name, setvideo_file_name] = React.useState("");
 	const uuid = require('uuid/v1');
-	const [video_file_id, setvideo_file_id] = React.useState(uuid());
 	let fileUpload=""
 	const postreq = (formData) => {
 		const axios = require('axios');
 		axios.post("/file_from_form", formData)
-			.then(res =>props.set_allow_continue())
+			.then(res =>console.log(res))
 			.catch(err => console.warn(err));
 	}
 	const handleFileInputChange = (e) => {
