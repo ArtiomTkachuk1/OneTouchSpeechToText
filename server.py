@@ -62,6 +62,7 @@ def upload_file_from_form():
     settings = json.load(request.files['settings']);
     concat_and_save(app.config['DATA_FOLDER'], settings_name, file_path, settings);
     app.config['DATA_FOLDER']
+    print("Data saved")
     return("OK");
 
 @app.route('/file_from_ref', methods=['POST'])
@@ -70,6 +71,7 @@ def upload_file_from_ref():
     media_name=download_audio(request.json["ref"],app.config['UPLOAD_FOLDER']);
     settings["audio"]=os.path.join(app.config['UPLOAD_FOLDER'],media_name+".wav");
     concat_and_save(app.config['DATA_FOLDER'], settings_name, settings["audio"], settings);
+    print("Data saved")
     return("OK");
 
 

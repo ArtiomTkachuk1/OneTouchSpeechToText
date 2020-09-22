@@ -49,7 +49,10 @@ export function NextFormsFile(props) {
 	const postreq = (formData) => {
 		const axios = require('axios');
 		axios.post("/file_from_form", formData)
-			.then(res =>console.log(res))
+			.then(res =>{
+									props.set_page_to_1();
+									console.log(res);
+									})
 			.catch(err => console.warn(err));
 	}
 	const handleFileInputChange = (e) => {
@@ -77,7 +80,6 @@ export function NextFormsFile(props) {
 			});
 			formData.append("settings", blob);
 			postreq(formData);
-			props.set_page_to_1();
 		}
 		else{
 			 props.seterror_mesage(props.error_mesage_strings[0]);

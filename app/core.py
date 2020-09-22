@@ -81,7 +81,6 @@ def parse_args():
 
 
 def core(path_to_args):
-    print(os.getcwd())
     #args = parse_args()
     print(path_to_args)
     args=load_args(path_to_args)

@@ -59,7 +59,10 @@ export function NextFormsRef(props) {
 				t_model:props.nn
 			}
 		})
-		.then(res => console.log(res))
+		.then(res => {
+			props.set_page_to_1();
+			console.log(res);
+		})
 		.catch(err => console.warn(err));
 	}
 
@@ -113,7 +116,6 @@ export function NextFormsRef(props) {
 			}
 		}
 		postreq();
-		props.set_page_to_1();
 	}
 	if(props.values.name===props.types[0]){
 		return (
