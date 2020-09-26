@@ -34,7 +34,7 @@ def concat_and_save(path,name,path_to_audio,data):
         json.dump(data, json_file);
 
 
-template_folder=os.path.join("frontend","build")
+template_folder=os.path.join("OneTouchSpeechToTextFrontend","build")
 static_folder=os.path.join(template_folder,"static")
 app = Flask(__name__, static_folder=static_folder, template_folder=template_folder)
 
