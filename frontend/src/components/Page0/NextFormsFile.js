@@ -50,7 +50,7 @@ export function NextFormsFile(props) {
 		const axios = require('axios');
 		axios.post("/file_from_form", formData)
 			.then(res =>{
-									props.set_page_to_1();
+									props.set_ask_tr();
 									console.log(res);
 									})
 			.catch(err => console.warn(err));
@@ -79,6 +79,7 @@ export function NextFormsFile(props) {
 			  type: 'application/json'
 			});
 			formData.append("settings", blob);
+			props.set_page_to_1();
 			postreq(formData);
 		}
 		else{

@@ -3,8 +3,8 @@ import json;
 import youtube_dl;
 from app.core import core;
 import time;
-from flask import Flask, render_template, request, redirect, url_for, request, send_file, Response,abort;
-from flask_cors import CORS, cross_origin;
+from flask import Flask, render_template, request, jsonify;
+#from flask_cors import CORS, cross_origin;
 
 
 def download_audio(link,upload_path):
@@ -38,7 +38,7 @@ template_folder=os.path.join("frontend","build")
 static_folder=os.path.join(template_folder,"static")
 app = Flask(__name__, static_folder=static_folder, template_folder=template_folder)
 
-cors = CORS(app, resources={r"/": {"origins": "http://localhost:5000"}})
+#cors = CORS(app, resources={r"/": {"origins": "http://localhost:5000"}})
 app.config['CORS_HEADERS'] = 'Content-Type'
 
 UPLOAD_FOLDER = os.path.join(app.root_path, 'upload')
@@ -69,18 +69,21 @@ def upload_file_from_form():
 def upload_file_from_ref():
     settings = request.json;
     media_name=download_audio(request.json["ref"],app.config['UPLOAD_FOLDER']);
+    print(media_name)
     settings["audio"]=os.path.join(app.config['UPLOAD_FOLDER'],media_name+".wav");
+    print(settings["audio"])
     concat_and_save(app.config['DATA_FOLDER'], settings_name, settings["audio"], settings);
     print("Data saved")
     return("OK");
 
 
 @app.route('/get_transcribtion',methods=['GET'])
-@cross_origin(origin='*',headers=['Access-Control-Allow-Origin'])
+#@cross_origin()#origin='*',headers=['Access-Control-Allow-Origin'])
 def return_data():
     settings_path=os.path.join(app.config['DATA_FOLDER'], settings_name);
     result=core(settings_path)
-    print(result)
+    result=jsonify(result)
+    result.headers.add("Access-Control-Allow-Origin", "*")
     return(result)
 
 print(app.url_map)

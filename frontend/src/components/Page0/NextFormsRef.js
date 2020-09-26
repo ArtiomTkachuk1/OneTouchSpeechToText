@@ -45,10 +45,7 @@ export function NextFormsRef(props) {
 	const handleTextInputChange = (event) =>{
 		set_ref(event.target.value);
 	}
-	const [num_of_seconds, set_num_of_seconds] = React.useState("");
-	const handleTextInputChange2 = (event) =>{
-		set_num_of_seconds(event.target.value);
-	}
+
 	const postreq=()=>{
 		const axios = require('axios');
 		axios({
@@ -60,7 +57,7 @@ export function NextFormsRef(props) {
 			}
 		})
 		.then(res => {
-			props.set_page_to_1();
+			props.set_ask_tr();
 			console.log(res);
 		})
 		.catch(err => console.warn(err));
@@ -69,7 +66,6 @@ export function NextFormsRef(props) {
 
 	const handleClick0 = (event) =>{
 		event.preventDefault();
-		console.log(num_of_seconds)
 		let ans=props.default_check()
 		if(ans!==true){
 			props.seterror_mesage(ans);
@@ -115,6 +111,7 @@ export function NextFormsRef(props) {
 				return
 			}
 		}
+		props.set_page_to_1();
 		postreq();
 	}
 	if(props.values.name===props.types[0]){
@@ -150,6 +147,10 @@ export function NextFormsRef(props) {
 	}
 }
 /*
+		const [num_of_seconds, set_num_of_seconds] = React.useState("");
+	const handleTextInputChange2 = (event) =>{
+		set_num_of_seconds(event.target.value);
+	}
 	<TextField
 		label={"Number of seconds"}
 		id="margin-normal"

@@ -114,6 +114,7 @@ export function Page0(props) {
 				<NextFormsRef
 					set_im_src={props.set_im_src}
 					set_page_to_1={props.set_page_to_1}
+					set_ask_tr={props.set_ask_tr}
 					width={width}
 					values={values}
 					types={types}
@@ -127,6 +128,7 @@ export function Page0(props) {
 				<NextFormsFile
 					set_im_src={props.set_im_src}
 					set_page_to_1={props.set_page_to_1}
+					set_ask_tr={props.set_ask_tr}
 					width={width}
 					values={values}
 					types={types}

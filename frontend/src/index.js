@@ -8,8 +8,6 @@ import {Page1} from "./components/Page1/Page1";
 const color1=green;
 const color2=red;
 
-const color_lines=color1['500'];
-const color_lines_marked=color2['300'];
 
 const theme = createMuiTheme({
 	spacing: 4,
@@ -30,6 +28,7 @@ class App extends React.Component{
 		this.state = {
 			page:0,
 			transcribtion:"",
+			ask_tr:false
 		};
 	}
 	set_page_to_1=()=>{
@@ -40,6 +39,11 @@ class App extends React.Component{
 	set_transcribtion=(transcr)=>{
 		this.setState({
 			transcribtion:transcr
+		});
+	}
+	set_ask_tr=()=>{
+		this.setState({
+			ask_tr:true
 		});
 	}
 	componentDidMount() {
@@ -58,11 +62,13 @@ class App extends React.Component{
 				<div>
 					<Page0
 						page={this.state.page}
+						set_ask_tr={this.set_ask_tr}
 						set_page_to_1={this.set_page_to_1}
 					/>
 					<Page1
 						page={this.state.page}
 						transcribtion={this.state.transcribtion}
+						ask_tr={this.state.ask_tr}
 						set_transcribtion={this.set_transcribtion}
 					/>
 				</div>

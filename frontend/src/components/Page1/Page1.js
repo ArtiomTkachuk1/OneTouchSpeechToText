@@ -17,10 +17,10 @@ export class Page1 extends React.Component{
         }
 		}
 		componentDidUpdate(prevProps) {
-			if((this.props.page===1)&&(this.props.page!==prevProps.page)){
+			if((this.props.ask_tr===true)&&(this.props.ask_tr!==prevProps.ask_tr)){
 				console.log("kra")
 				const axios = require('axios');
-				axios.get('http://127.0.0.1:5000/get_transcribtion', { headers: { "Access-Control-Allow-Origin": "Kra"} })
+				axios.get('http://127.0.0.1:5000/get_transcribtion' )
 			          .then(res => {
 			                const data = res.data;
 											console.log(data)

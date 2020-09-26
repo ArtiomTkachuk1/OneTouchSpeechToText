@@ -1,5 +1,4 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 
 const helper="result of transcribtion"
@@ -9,7 +8,7 @@ export class TranscribHolder extends React.Component {
     super(props);
   }
   render() {
-    if(this.props.loading==false){
+    if(this.props.loading===false){
       return (
           <div
             style={{
