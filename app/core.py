@@ -5,6 +5,7 @@ from .utils import (cut,
                     convert_to_wav,
                     set_to_silero,
                     load_args,
+                    fix_path,
                     Struct)
 from .models.deepspeech import deepspeech
 from .models.silero import silero
@@ -16,7 +17,7 @@ from .corrector.corrector import correct
 
 class Transcribe_Model:
     list_of_models=["deepspeech","silero"]
-    path_to_models=os.path.join("app","models")
+    path_to_models=fix_path("models")
     path_to_data="data"
     def __init__(self, args):
         if(args.t_model==self.list_of_models[0]):
@@ -88,7 +89,7 @@ def core(path_to_args):
     print(args.audio,args.t_model)
     args.audio=convert_to_wav(args.audio)
     cut(args.sec, args.audio)
-    path_to_corrector=os.path.join("app","corrector")
+    path_to_corrector=fix_path("corrector")
     print("Utils done")
     args_for_t_model={'audio': args.audio,
                       'language': args.language,

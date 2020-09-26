@@ -9,6 +9,10 @@ class Struct:
         self.__dict__.update(entries)
 
 
+def fix path(str):
+    return(os.path.join("app",str))
+
+
 def cut(sec,audio_name):
     if sec is not None:
         sound = AudioSegment.from_file(audio_name)
