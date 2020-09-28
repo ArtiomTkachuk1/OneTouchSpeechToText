@@ -13,7 +13,7 @@ def fix_path(str):
 
 def monitor(str,time):
     print(str)
-    print("Passed time",datetime.now()-time)
+    print("Passed time:",datetime.now()-time)
     return datetime.now()
 
 def cut(sec,audio_name):
