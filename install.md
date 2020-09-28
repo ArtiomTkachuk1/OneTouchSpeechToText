@@ -21,13 +21,13 @@ https://drive.google.com/drive/folders/1EpGtplkUwXRL8ggis6WPTYXA0xRpEUxz?usp=sha
 Paste folders content to OneTouchSpeechToText/app  
 ## 5. Fix blas theno warning
 ### Install OpenBLAS  
-git clone git://github.com/xianyi/OpenBLAS
-cd OpenBLAS
-make FC=gfortran
-sudo make PREFIX=/usr/local/ install
+git clone git://github.com/xianyi/OpenBLAS  
+cd OpenBLAS  
+make FC=gfortran  
+sudo make PREFIX=/usr/local/ install  
 ### Create file "theanorc"  
 Wrtie there:  
-[blas]
+[blas]  
 ldflags=/usr/local/lib/libopenblas -lopenblas  
 rename it as ".theanorc" 
 ## 5. Test
