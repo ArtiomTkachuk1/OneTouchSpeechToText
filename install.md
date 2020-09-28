@@ -30,6 +30,6 @@ Wrtie there:
 [blas]  
 ldflags=/usr/local/lib/libopenblas -lopenblas  
 rename it as ".theanorc" 
-## 5. Test
+## 6. Test
 sudo -s  
 python3 server.py
