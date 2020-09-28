@@ -14,7 +14,7 @@ source venv/bin/activate
 ### Without gpu:  
 pip install -r requirements.txt  
 ### With gpu  
-pip install -r requirementsgpu.txt  
+pip install -r requirements-gpu.txt  
 ## 4. Download weight files
 https://drive.google.com/drive/folders/1EpGtplkUwXRL8ggis6WPTYXA0xRpEUxz?usp=sharing
 ### Paste folders content to OneTouchSpeechToText/app  
