@@ -11,8 +11,9 @@ git clone https://github.com/ArtiomTkachuk1/OneTouchSpeechToText.git
 cd /OneTouchSpeechToText  
 virtualenv -p /usr/bin/python3 venv  
 source venv/bin/activate  
+pip3 install -r requirements.txt 
 ### Without gpu:  
-pip3 install -r requirements.txt  
+pip3 install -r requirements-no-gpu.txt  
 ### With gpu  
 pip3 install -r requirements-gpu.txt  
 ## 4. Download weight files
