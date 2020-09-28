@@ -1,14 +1,16 @@
 import os
 import glob
+from datetime import datetime
 import argparse
 from .utils import (cut,
                     convert_to_wav,
                     set_to_silero,
                     load_args,
                     fix_path,
+                    monitor,
                     Struct)
-from .models.deepspeech import deepspeech
-from .models.silero import silero
+from .t_models.deepspeech import deepspeech
+from .t_models.silero import silero
 from .corrector.corrector import correct
 '''class Struct:
     def __init__(self, **entries):
@@ -53,7 +55,7 @@ class Transcribe_Model:
     def deepspeech_result(self):
         result1,result2,result3=deepspeech.main(self.args)
         return(result1)
-    
+
     def silero_result(self):
         set_to_silero(self.args.audio)
         result=silero.main(self.args)
@@ -84,13 +86,14 @@ def parse_args():
 def core(path_to_args):
     #args = parse_args()
     print(path_to_args)
+    time=datetime.now()
     args=load_args(path_to_args)
-    print("args loaded")
+    time=monitor("args loaded",time)
     print(args.audio,args.t_model)
     args.audio=convert_to_wav(args.audio)
     cut(args.sec, args.audio)
     path_to_corrector=fix_path("corrector")
-    print("Utils done")
+    time=monitor("Utils done",time)
     args_for_t_model={'audio': args.audio,
                       'language': args.language,
                       't_model': args.t_model,
@@ -98,9 +101,9 @@ def core(path_to_args):
                       'scorer_file': args.t_scorer_file}
     args_for_t_model = Struct(**args_for_t_model)
     t_model=Transcribe_Model(args_for_t_model)
-    print("Transcribe_Model loaded")
+    time=monitor("Transcribe_Model loaded",time)
     raw_text=t_model.run()
-    print("Transcribe_Model done")
+    time=monitor("Transcribe_Model done",time)
     correct_text=correct(path_to_corrector,raw_text)
-    print("Correction done")
+    time=monitor("Correction done",time)
     return(correct_text)

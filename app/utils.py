@@ -1,17 +1,20 @@
 import os
 from pydub import AudioSegment
 import json
-import time
-
+from datetime import datetime
 
 class Struct:
     def __init__(self, **entries):
         self.__dict__.update(entries)
 
 
-def fix path(str):
+def fix_path(str):
     return(os.path.join("app",str))
 
+def monitor(str,time):
+    print(str)
+    print("Passed time",datetime.now()-time)
+    return datetime.now()
 
 def cut(sec,audio_name):
     if sec is not None:

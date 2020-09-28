@@ -4,11 +4,16 @@ import youtube_dl;
 from app.core import core;
 import time;
 from flask import Flask, render_template, request, jsonify;
+from datetime import datetime
+
+# current date and time
 #from flask_cors import CORS, cross_origin;
 
 
 def download_audio(link,upload_path):
-    SAVE_PATH =upload_path
+    timestamp = datetime.timestamp(datetime.now())
+    file_name="audio"+str(timestamp)+".wav"
+    SAVE_PATH =os.path.join(upload_path,file_name)
     ydl_opts = {
         'format': 'bestaudio/best',
         'postprocessors': [{
@@ -16,14 +21,12 @@ def download_audio(link,upload_path):
             'preferredcodec': 'wav',
             'preferredquality': '192',
         }],
-        'outtmpl':SAVE_PATH + '/%(title)s.%(ext)s',
+        'outtmpl':SAVE_PATH
     }
     title=""
     with youtube_dl.YoutubeDL(ydl_opts) as ydl:
         ydl.download([link])
-        info_dict = ydl.extract_info(link, download=False)
-        title=info_dict.get("title",None)
-    return title
+    return file_name
 
 
 def concat_and_save(path,name,path_to_audio,data):
@@ -40,9 +43,6 @@ app = Flask(__name__, static_folder=static_folder, template_folder=template_fold
 
 #cors = CORS(app, resources={r"/": {"origins": "http://localhost:5000"}})
 app.config['CORS_HEADERS'] = 'Content-Type'
-
-UPLOAD_FOLDER = os.path.join(app.root_path, 'upload')
-app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 DATA_FOLDER = os.path.join(app.root_path, 'data')
 app.config['DATA_FOLDER'] = DATA_FOLDER
 settings_name="settings.json"
@@ -56,10 +56,13 @@ def index():
 @app.route('/file_from_form', methods=['POST'])
 def upload_file_from_form():
     file = request.files["media"];
-    filename=file.filename;
-    file_path=os.path.join(app.config['UPLOAD_FOLDER'],filename);
+    timestamp = datetime.timestamp(datetime.now())
+    filename="audio"+str(timestamp)+"."+file.filename.split(".")[-1];
+    file_path=os.path.join(app.config['DATA_FOLDER'],filename);
     file.save(file_path);
     settings = json.load(request.files['settings']);
+    original_name={"original_name":file.filename}
+    settings.update(original_name)
     concat_and_save(app.config['DATA_FOLDER'], settings_name, file_path, settings);
     app.config['DATA_FOLDER']
     print("Data saved")
@@ -68,10 +71,8 @@ def upload_file_from_form():
 @app.route('/file_from_ref', methods=['POST'])
 def upload_file_from_ref():
     settings = request.json;
-    media_name=download_audio(request.json["ref"],app.config['UPLOAD_FOLDER']);
-    print(media_name)
-    settings["audio"]=os.path.join(app.config['UPLOAD_FOLDER'],media_name+".wav");
-    print(settings["audio"])
+    file_name=download_audio(request.json["ref"],app.config['DATA_FOLDER']);
+    settings["audio"]=os.path.join(app.config['DATA_FOLDER'],file_name);
     concat_and_save(app.config['DATA_FOLDER'], settings_name, settings["audio"], settings);
     print("Data saved")
     return("OK");
