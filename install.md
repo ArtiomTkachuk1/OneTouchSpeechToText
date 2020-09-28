@@ -17,7 +17,7 @@ pip3 install -r requirements-no-gpu.txt
 ### With gpu  
 pip3 install -r requirements-gpu.txt  
 ## 4. Download weight files
-https://drive.google.com/drive/folders/1EpGtplkUwXRL8ggis6WPTYXA0xRpEUxz?usp=sharing
+https://drive.google.com/drive/folders/1EpGtplkUwXRL8ggis6WPTYXA0xRpEUxz?usp=sharing  
 Paste folders content to OneTouchSpeechToText/app  
 ## 5. Fix blas theno warning
 ### Install OpenBLAS  
