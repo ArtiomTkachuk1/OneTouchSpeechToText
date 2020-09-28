@@ -1,0 +1,16 @@
+pip3 install deepspeech
+pip3 install deepspeech-gpu
+pip3 install Flask
+pip3 install pyspellchecker
+pip3 install -U flask-cors
+pip3 instll youtube-dl
+pip3 instll youtube_dl
+pip3 install pydub
+pip3 install omegaconf
+pip3 install torchaudio
+pip3 install soundfile
+pip3 install scipy
+pip3 install ffmpeg
+pip3 install punctuator
+pip3 install gdown
+pip install torch==1.6.0+cu101 torchvision==0.7.0+cu101 -f https://download.pytorch.org/whl/torch_stable.html
