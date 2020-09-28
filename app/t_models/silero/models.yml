@@ -1,0 +1,26 @@
+# pre-trained STT models
+stt_models:
+  en:
+    latest:
+      meta:
+        name: "en_v1"
+      labels: "app/t_models/silero/data/en/en_v1_labels.json"
+      jit: "app/t_models/silero/data/en/en_v1_jit.model"
+      onnx: "app/t_models/silero/data/en/en_v1_batchless.onnx"
+      tf: "app/t_models/silero/data/en/en_v1_batchless.pb"
+  de:
+    latest:
+      meta: 
+        name: "de_v1"
+      labels: "app/t_models/silero/data/de/de_v1_labels.json"
+      jit: "app/t_models/silero/data/de/de_v1_jit.model"
+      onnx: "app/t_models/silero/data/de/de_v1_batchless.onnx"
+      tf: "app/t_models/silero/data/de/de_v1_batchless.pb"
+  es:
+    latest:
+      meta: 
+        name: "es_v1"
+      labels: "app/t_models/silero/data/es/es_v1_labels.json"
+      jit: "app/t_models/silero/data/es/es_v1_jit.model"
+      onnx: "app/t_models/silero/data/es/es_v1_batchless.onnx"
+      tf: "app/t_models/silero/data/es/es_v1_batchless.pb"

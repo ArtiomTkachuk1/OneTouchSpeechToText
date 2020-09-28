@@ -17,7 +17,7 @@ from .corrector.corrector import correct
 
 class Transcribe_Model:
     list_of_models=["deepspeech","silero"]
-    path_to_models=fix_path("models")
+    path_to_models=fix_path("t_models")
     path_to_data="data"
     def __init__(self, args):
         if(args.t_model==self.list_of_models[0]):
