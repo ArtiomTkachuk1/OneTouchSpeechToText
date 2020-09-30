@@ -4,25 +4,6 @@ import MenuItem from '@material-ui/core/MenuItem';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import SecondarySelects from "./SecondarySelects";
 
-
-function setOptions(data){
-	let mainOptions = []
-	let secondarySelects = []
-	let secondaryOptions = []
-	for(let i in data){
-		mainOptions.push(i)
-		let secondarySelect=[]
-		let secondaryOption=[]
-		for(let j in data[i]){
-			secondarySelect.push(j)
-			secondaryOption.push(data[i][j])
-		}
-		secondarySelects.push(secondarySelect)
-		secondaryOptions.push(secondaryOption)
-	}
-	return [mainOptions,secondarySelects,secondaryOptions]
-}
-
 const helper="Choose language"
 export class TreeSelect extends Component {
   render() {

@@ -5,7 +5,6 @@ import TextField from '@material-ui/core/TextField';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import urlParser from "js-video-url-parser";
 export function NextFormsRef(props) {
-	const end_button_text="Go";
 	const useStyles = makeStyles(theme => ({
 		container: {
 			display: 'flex',
@@ -41,21 +40,14 @@ export function NextFormsRef(props) {
 		},
 	}));
 	const classes = useStyles();
-	const [ref, set_ref] = React.useState("");
+	const [ref, setRef] = React.useState("");
 	const handleTextInputChange = (event) =>{
-		set_ref(event.target.value);
+		setRef(event.target.value);
 	}
 
-	const postreq=()=>{
+	const postreq= (formData) =>{
 		const axios = require('axios');
-		axios({
-			method: 'post',
-			url: '/file_from_ref',
-			data: {
-				ref: ref,
-				t_model:props.nn
-			}
-		})
+		axios.post("/file_from_ref", formData)
 		.then(res => {
 			props.set_ask_tr();
 			console.log(res);
@@ -63,56 +55,33 @@ export function NextFormsRef(props) {
 		.catch(err => console.warn(err));
 	}
 
+	const isYoutube = (ref) => {
+		if(urlParser.parse(ref)!==undefined){
+			return(true);
+		}
+		return(false);
+	}
 
 	const handleClick0 = (event) =>{
 		event.preventDefault();
-		let ans=props.default_check()
-		if(ans!==true){
-			props.seterror_mesage(ans);
-			return
-		}
-		/*let numcheck=isNaN(parseInt(num_of_seconds))
-		if(numcheck===true){
-			numcheck=false
-			props.seterror_mesage(props.error_mesage_strings[2]);
-			return
+		if(isYoutube(ref)===true){
+			let data=props.getConfig()
+			if(data!==false){
+				data.push({"ref":ref})
+				let formData = new FormData();
+				let json=JSON.stringify(data);
+				const blob = new Blob([json], {
+				  type: 'application/json'
+				});
+				formData.append("settings", blob);
+				props.set_page_to_1();
+				console.log(data);
+				postreq(formData);
+			}
 		}
 		else{
-			numcheck=true;
-		}*/
-		let isYoutube=false;
-		let isLink=false;
-		let isRTSP=false;
-		let isMJPG=false;
-		if(urlParser.parse(ref)!==undefined){
-			isYoutube=true;
+			props.setErrorMessage(props.errorMessageStrings[3]);
 		}
-		if(isYoutube===false){
-			let end=ref.indexOf(".link");
-			let start=ref.indexOf("http://");
-			if((start===0)&&(end===(ref.length-5))){
-				isLink=true;
-			}
-		}
-		if((isYoutube===false)&&(isLink===false)){
-			let start=ref.indexOf("rtsp://");
-			if(start===0){
-				isRTSP=true;
-			}
-		}
-		if((isYoutube===false)&&(isLink===false)&&(isLink===false)){
-			let end=ref.indexOf(".mjpg");
-			let start=ref.indexOf("http://");
-			if((start===0)&&(end===(ref.length-5))){
-				isMJPG=true;
-			}
-			else{
-				props.seterror_mesage(props.error_mesage_strings[3]);
-				return
-			}
-		}
-		props.set_page_to_1();
-		postreq();
 	}
 	if(props.values.name===props.types[0]){
 		return (
@@ -132,12 +101,12 @@ export function NextFormsRef(props) {
 					className={classes.button}
 					onClick={handleClick0}
 				>
-					{end_button_text}
+					{props.endButtonText}
 				</Button>
 				<FormHelperText
 					className={classes.FormHelperText}
 				>
-					{props.error_mesage}
+					{props.errorMessage}
 				</FormHelperText>
 			</div>
 		);
@@ -146,18 +115,3 @@ export function NextFormsRef(props) {
 		return(null);
 	}
 }
-/*
-		const [num_of_seconds, set_num_of_seconds] = React.useState("");
-	const handleTextInputChange2 = (event) =>{
-		set_num_of_seconds(event.target.value);
-	}
-	<TextField
-		label={"Number of seconds"}
-		id="margin-normal"
-		defaultValue=""
-		className={classes.textField}
-		onChange={handleTextInputChange2}
-		helperText=""
-		margin="normal"
-	/>
-*/

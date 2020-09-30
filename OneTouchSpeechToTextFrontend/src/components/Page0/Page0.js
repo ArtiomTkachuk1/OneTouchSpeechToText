@@ -30,6 +30,7 @@ function setOptions(data){
 
 
 export function Page0(props) {
+	const endButtonText="Go";
 	const name="Type of video";
 	const types=["YouTube","File with record"];
 	const helper1="Choose type of media";
@@ -43,29 +44,23 @@ export function Page0(props) {
 			marginTop:marginTop
 		}
 	}));
-	const typesTranscribe=[
-		"deepspeech",
-		"silero/en",
-		"silero/de",
-		"silero/es",
-	];
-	const error_mesage_strings=[
+	const errorMessageStrings=[
+						"Choose language first",
+						"Choose configuration first",
 						"Upload file first",
-						"Choose type of transcribe model first",
-						"Number of seconds must be natural number",
-						"Link is incorrect"
+						"Link is incorrect",
 								]
 	const classes = useStyles();
-	var mainOptions = [];
-	var secondarySelects = [];
-	var secondaryOptions = [];
+	let mainOptions = [];
+	let secondarySelects = [];
+	let secondaryOptions = [];
 	const [values, setValues] = React.useState({
 		type: "",
 		name: "",
 	});
-	const [error_mesage, seterror_mesage] = React.useState("");
+	const [errorMessage, setErrorMessage] = React.useState("");
 	const handleChange = event => {
-		seterror_mesage("")
+		setErrorMessage("")
 		setValues({
 			type: event.target.value,
 			name:types[event.target.value],
@@ -73,30 +68,19 @@ export function Page0(props) {
 	}
 	const [chosenMainOption, setChosenMainOption] = React.useState('');
 	const [chosenSecondaryOptions, setChosenSecondaryOptions] = React.useState([]);
-	const [models, setModels] = React.useState("");
-
-	const default_check=()=>{
-		let nncheck=false
-		if(models!==""){
-			nncheck=true
-			return true
-		}
-		else{
-			return(error_mesage_strings[1])
-		}
-	}
 	const handleMainChange = event => {
 			setChosenMainOption(event.target.value);
-			initSecondaryOptions(secondaryOptions[event.target.value].length);
+			if(event.target.value!=='')
+				initSecondaryOptions(secondaryOptions[event.target.value].length);
+			else{
+				setChosenSecondaryOptions([]);
+			}
 	}
 	const initSecondaryOptions=(len)=>{
 			 setChosenSecondaryOptions(new Array(len).fill(''));
-			 console.log(chosenSecondaryOptions)
 	}
 	const handleSecondaryChange = (event) => {
 		let i=parseInt(event.target.name.slice(-1));
-		console.log(event.target.name)
-		console.log(i)
 		const newChosenSecondaryOptions = chosenSecondaryOptions.map((item, index) => {
         if (index === i) {
           return event.target.value;
@@ -104,8 +88,44 @@ export function Page0(props) {
           return item;
         }
       });
-			console.log(newChosenSecondaryOptions)
-			setChosenSecondaryOptions(newChosenSecondaryOptions)
+			setChosenSecondaryOptions(newChosenSecondaryOptions);
+	}
+	const getConfig=()=>{
+		let con=[]
+		if(chosenMainOption!==''){
+			con.push({
+			    "Language":mainOptions[chosenMainOption],
+			});
+			let check=true;
+			let lth=chosenSecondaryOptions.length;
+			for(let i =0;i<lth;i++){
+				console.log(i)
+				if(chosenSecondaryOptions[i]===''){
+					check=false;
+					break;
+				}
+			}
+			if(check===true){
+				let lth=secondarySelects[chosenMainOption].length;
+				for(let i=0;i<lth;i++){
+					let key=secondarySelects[chosenMainOption][i];
+					let value=secondaryOptions[chosenMainOption][chosenSecondaryOptions[i]][0]
+					console.log(key,value)
+					con.push({
+					    [key]:value,
+					});
+				}
+				return(con)
+			}
+			else{
+				setErrorMessage(errorMessageStrings[1])
+				return(false)
+			}
+		}
+		else{
+			setErrorMessage(errorMessageStrings[0])
+			return(false)
+		}
 	}
 	if(props.page===0){
 		[mainOptions,secondarySelects,secondaryOptions]=setOptions(props.config);
@@ -146,32 +166,30 @@ export function Page0(props) {
 					<FormHelperText>{helper1}</FormHelperText>
 				</FormControl>
 				<NextFormsRef
-					set_im_src={props.set_im_src}
 					set_page_to_1={props.set_page_to_1}
 					set_ask_tr={props.set_ask_tr}
 					width={width}
 					values={values}
 					types={types}
-					nn={typesTranscribe[models-1]}
-					default_check={default_check}
-					marginTop={"4%"}
-					seterror_mesage={seterror_mesage}
-					error_mesage={error_mesage}
-					error_mesage_strings={error_mesage_strings}
+					getConfig={getConfig}
+					marginTop={marginTop}
+					setErrorMessage={setErrorMessage}
+					errorMessage={errorMessage}
+					errorMessageStrings={errorMessageStrings}
+					endButtonText={endButtonText}
 				/>
 				<NextFormsFile
-					set_im_src={props.set_im_src}
 					set_page_to_1={props.set_page_to_1}
 					set_ask_tr={props.set_ask_tr}
 					width={width}
 					values={values}
 					types={types}
-					nn={typesTranscribe[models-1]}
-					default_check={default_check}
+					getConfig={getConfig}
 					marginTop={marginTop}
-					seterror_mesage={seterror_mesage}
-					error_mesage={error_mesage}
-					error_mesage_strings={error_mesage_strings}
+					setErrorMessage={setErrorMessage}
+					errorMessage={errorMessage}
+					errorMessageStrings={errorMessageStrings}
+					endButtonText={endButtonText}
 				/>
 			</div>
 		)

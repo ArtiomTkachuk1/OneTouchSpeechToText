@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import {MuiThemeProvider, createMuiTheme} from '@material-ui/core/styles';
 import red from '@material-ui/core/colors/red';
 import green from '@material-ui/core/colors/lightBlue';
+import {Init} from "./components/Init/Init";
 import {Page0} from "./components/Page0/Page0";
 import {Page1} from "./components/Page1/Page1";
 const color1=green;
@@ -44,24 +45,29 @@ class App extends React.Component{
 		  "German": {
 		    "Transcribe model": [
 		      "Silero"
-		    ],
-		    "Diagization model": [
-		      "Kaldi",
-		    ],
-		    "Spellchecker": [
-		      "Spellchecker3"
 		    ]
 		  }
 		}
 		this.state = {
 			page:0,
 			transcribtion:"",
-			askTr:false
+			askTr:false,
+			config:{}
 		};
+	}
+	setPageTo0=()=>{
+		this.setState({
+			page:0
+		});
 	}
 	setPageTo1=()=>{
 		this.setState({
 			page:1
+		});
+	}
+	setConfig=(conf)=>{
+		this.setState({
+			config:conf
 		});
 	}
 	setTranscribtion=(transcr)=>{
@@ -88,6 +94,10 @@ class App extends React.Component{
 		return (
 			<MuiThemeProvider theme={theme}>
 				<div>
+					<Init
+						setConfig={this.state.setConfig}
+						setPageTo0={this.setPageTo0}
+					/>
 					<Page0
 						page={this.state.page}
 						set_ask_tr={this.setAskTr}

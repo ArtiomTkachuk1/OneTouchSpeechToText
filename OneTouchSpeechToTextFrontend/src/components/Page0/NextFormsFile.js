@@ -5,7 +5,6 @@ import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import Container from '@material-ui/core/Container';
 import FormHelperText from '@material-ui/core/FormHelperText';
 export function NextFormsFile(props) {
-	const end_button_text="Go";
 	const useStyles = makeStyles(theme => ({
 		div: {
 			display: 'flex',
@@ -41,8 +40,8 @@ export function NextFormsFile(props) {
 		},
 	}));
 	const classes = useStyles();
-	const upload_button_text="Upload";
-	const [video_file, setvideo_file] = React.useState("");
+	const uploadButtonText="Upload";
+	const [mediaFile, setMediaFile] = React.useState("");
 	const uuid = require('uuid/v1');
 	let fileUpload=""
 	const postreq = (formData) => {
@@ -56,31 +55,29 @@ export function NextFormsFile(props) {
 	}
 	const handleFileInputChange = (e) => {
 		e.preventDefault();
-		setvideo_file(fileUpload.files[0]);
+		setMediaFile(fileUpload.files[0]);
 	}
 	const handleClick1 = (event) =>{
 		event.preventDefault();
-		let ans=props.default_check()
-		if(ans!==true){
-			props.seterror_mesage(ans);
-			return
-		}
-		if(video_file!==''){
-			let file = video_file;
-			let file_id="media"
-			let formData = new FormData();
-			formData.append(file_id,file);
-			let data={"t_model":props.nn}
-			let json=JSON.stringify(data)
-			const blob = new Blob([json], {
-			  type: 'application/json'
-			});
-			formData.append("settings", blob);
-			props.set_page_to_1();
-			postreq(formData);
+		if(mediaFile!==''){
+			let file = mediaFile;
+			let fileId="media"
+			let data=props.getConfig()
+			if(data!==false){
+				let formData = new FormData();
+				formData.append(fileId,file);
+				let json=JSON.stringify(data)
+				const blob = new Blob([json], {
+				  type: 'application/json'
+				});
+				formData.append("settings", blob);
+				props.set_page_to_1();
+				console.log(data);
+				postreq(formData);
+			}
 		}
 		else{
-			 props.seterror_mesage(props.error_mesage_strings[0]);
+			 props.setErrorMessage(props.errorMessageStrings[2]);
 		}
 	}
 	if(props.values.name===props.types[1]){
@@ -108,7 +105,7 @@ export function NextFormsFile(props) {
 						component="span"
 						className={classes.button}
 					>
-						{upload_button_text}
+						{uploadButtonText}
 						<CloudUploadIcon
 							className={classes.rightIcon}
 						/>
@@ -120,12 +117,12 @@ export function NextFormsFile(props) {
 						className={classes.button}
 						onClick={handleClick1}
 					>
-						{end_button_text}
+						{props.endButtonText}
 					</Button>
 					<FormHelperText
 						className={classes.FormHelperText}
 					>
-						{props.error_mesage}
+						{props.errorMessage}
 					</FormHelperText>
 				</label>
 			</div>
