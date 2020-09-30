@@ -7,14 +7,32 @@ import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import {NextFormsRef} from "./NextFormsRef";
 import {NextFormsFile} from "./NextFormsFile";
-import {NestedSelect} from "./NestedSelect";
-import TextField from '@material-ui/core/TextField';
+import {TreeSelect} from "./TreeSelect";
+
+
+function setOptions(data){
+	let mainOptions = []
+	let secondarySelects = []
+	let secondaryOptions = []
+	for(let i in data){
+		mainOptions.push(i)
+		let secondarySelect=[]
+		let secondaryOption=[]
+		for(let j in data[i]){
+			secondarySelect.push(j)
+			secondaryOption.push(data[i][j])
+		}
+		secondarySelects.push(secondarySelect)
+		secondaryOptions.push(secondaryOption)
+	}
+	return [mainOptions,secondarySelects,secondaryOptions]
+}
+
 
 export function Page0(props) {
 	const name="Type of video";
 	const types=["YouTube","File with record"];
-	const helper1="Choose transcribe model";
-	const helper2="Choose type of media";
+	const helper1="Choose type of media";
 	const width="40%";
 	const marginTop="6%";
 	const useStyles = makeStyles(theme => ({
@@ -25,17 +43,6 @@ export function Page0(props) {
 			marginTop:marginTop
 		}
 	}));
-	const classes = useStyles();
-	const [values, setValues] = React.useState({
-		type: "",
-		name: "",
-	});
-	const shownTypesTranscribe=[
-		"Deep Speech",
-		"Silero English",
-		"Silero German",
-		"Silero Spanish",
-	];
 	const typesTranscribe=[
 		"deepspeech",
 		"silero/en",
@@ -48,6 +55,14 @@ export function Page0(props) {
 						"Number of seconds must be natural number",
 						"Link is incorrect"
 								]
+	const classes = useStyles();
+	var mainOptions = [];
+	var secondarySelects = [];
+	var secondaryOptions = [];
+	const [values, setValues] = React.useState({
+		type: "",
+		name: "",
+	});
 	const [error_mesage, seterror_mesage] = React.useState("");
 	const handleChange = event => {
 		seterror_mesage("")
@@ -56,12 +71,13 @@ export function Page0(props) {
 			name:types[event.target.value],
 		});
 	}
-	const [nn, set_nn] = React.useState("");
-
+	const [chosenMainOption, setChosenMainOption] = React.useState('');
+	const [chosenSecondaryOptions, setChosenSecondaryOptions] = React.useState([]);
+	const [models, setModels] = React.useState("");
 
 	const default_check=()=>{
 		let nncheck=false
-		if(nn!==""){
+		if(models!==""){
 			nncheck=true
 			return true
 		}
@@ -69,28 +85,46 @@ export function Page0(props) {
 			return(error_mesage_strings[1])
 		}
 	}
+	const handleMainChange = event => {
+			setChosenMainOption(event.target.value);
+			initSecondaryOptions(secondaryOptions[event.target.value].length);
+	}
+	const initSecondaryOptions=(len)=>{
+			 setChosenSecondaryOptions(new Array(len).fill(''));
+			 console.log(chosenSecondaryOptions)
+	}
+	const handleSecondaryChange = (event) => {
+		let i=parseInt(event.target.name.slice(-1));
+		console.log(event.target.name)
+		console.log(i)
+		const newChosenSecondaryOptions = chosenSecondaryOptions.map((item, index) => {
+        if (index === i) {
+          return event.target.value;
+        } else {
+          return item;
+        }
+      });
+			console.log(newChosenSecondaryOptions)
+			setChosenSecondaryOptions(newChosenSecondaryOptions)
+	}
 	if(props.page===0){
+		[mainOptions,secondarySelects,secondaryOptions]=setOptions(props.config);
 		return(
 			<div>
 				<div
 					className={classes.formControl}
 				>
-					<NestedSelect
-						set_nn={set_nn}
+					<TreeSelect
+						key={"TreeSelect"}
+						mainOptions={mainOptions}
+						secondarySelects={secondarySelects}
+						secondaryOptions={secondaryOptions}
+						chosenMainOption={chosenMainOption}
+						chosenSecondaryOptions={chosenSecondaryOptions}
+						handleMainChange={handleMainChange}
+						handleSecondaryChange={handleSecondaryChange}
 					/>
 				</div>
-				<FormControl
-					className={classes.formControl}
-				>
-					<TextField
-						value={shownTypesTranscribe[nn-1]}
-						margin="normal"
-						helperText={helper1}
-						InputProps={{
-							readOnly: true,
-						}}
-					/>
-				</FormControl>
 				<FormControl
 					className={classes.formControl}
 				>
@@ -109,7 +143,7 @@ export function Page0(props) {
 						<MenuItem value={0}>{types[0]}</MenuItem>
 						<MenuItem value={1}>{types[1]}</MenuItem>
 					</Select>
-					<FormHelperText>{helper2}</FormHelperText>
+					<FormHelperText>{helper1}</FormHelperText>
 				</FormControl>
 				<NextFormsRef
 					set_im_src={props.set_im_src}
@@ -118,7 +152,7 @@ export function Page0(props) {
 					width={width}
 					values={values}
 					types={types}
-					nn={typesTranscribe[nn-1]}
+					nn={typesTranscribe[models-1]}
 					default_check={default_check}
 					marginTop={"4%"}
 					seterror_mesage={seterror_mesage}
@@ -132,7 +166,7 @@ export function Page0(props) {
 					width={width}
 					values={values}
 					types={types}
-					nn={typesTranscribe[nn-1]}
+					nn={typesTranscribe[models-1]}
 					default_check={default_check}
 					marginTop={marginTop}
 					seterror_mesage={seterror_mesage}

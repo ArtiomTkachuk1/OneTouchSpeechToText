@@ -3,9 +3,6 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 
 
 export class Loader extends React.Component {
-  constructor(props) {
-    super(props);
-  }
   render() {
     if(this.props.loading===true){
       return (
@@ -32,13 +29,3 @@ export class Loader extends React.Component {
     }
   }
 }
-/*render() {
-  if(this.props.loadins===true){
-    return (
-      <CircularProgress/>
-    );
-  }
-  else{
-    return(null)
-  }
-}*/

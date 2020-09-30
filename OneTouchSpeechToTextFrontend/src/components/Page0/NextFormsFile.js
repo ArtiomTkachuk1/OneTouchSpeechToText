@@ -43,7 +43,6 @@ export function NextFormsFile(props) {
 	const classes = useStyles();
 	const upload_button_text="Upload";
 	const [video_file, setvideo_file] = React.useState("");
-	const [video_file_name, setvideo_file_name] = React.useState("");
 	const uuid = require('uuid/v1');
 	let fileUpload=""
 	const postreq = (formData) => {
@@ -58,7 +57,6 @@ export function NextFormsFile(props) {
 	const handleFileInputChange = (e) => {
 		e.preventDefault();
 		setvideo_file(fileUpload.files[0]);
-		setvideo_file_name(fileUpload.files[0].name);
 	}
 	const handleClick1 = (event) =>{
 		event.preventDefault();
@@ -69,7 +67,6 @@ export function NextFormsFile(props) {
 		}
 		if(video_file!==''){
 			let file = video_file;
-			let file_name=video_file_name;
 			let file_id="media"
 			let formData = new FormData();
 			formData.append(file_id,file);

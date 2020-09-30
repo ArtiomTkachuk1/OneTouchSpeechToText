@@ -25,25 +25,53 @@ const theme = createMuiTheme({
 class App extends React.Component{
 	constructor(props) {
 		super(props);
+		this.config={
+		  "English": {
+		    "Transcribe model": [
+		      "DeepSpeech",
+		      "Vosk",
+		      "Silero"
+		    ],
+		    "Diagization model": [
+		      "Kaldi",
+		      "Payonette"
+		    ],
+		    "Spellchecker": [
+		      "Spellchecker1",
+		      "Spellchecker2"
+		    ]
+		  },
+		  "German": {
+		    "Transcribe model": [
+		      "Silero"
+		    ],
+		    "Diagization model": [
+		      "Kaldi",
+		    ],
+		    "Spellchecker": [
+		      "Spellchecker3"
+		    ]
+		  }
+		}
 		this.state = {
 			page:0,
 			transcribtion:"",
-			ask_tr:false
+			askTr:false
 		};
 	}
-	set_page_to_1=()=>{
+	setPageTo1=()=>{
 		this.setState({
 			page:1
 		});
 	}
-	set_transcribtion=(transcr)=>{
+	setTranscribtion=(transcr)=>{
 		this.setState({
 			transcribtion:transcr
 		});
 	}
-	set_ask_tr=()=>{
+	setAskTr=()=>{
 		this.setState({
-			ask_tr:true
+			askTr:true
 		});
 	}
 	componentDidMount() {
@@ -62,14 +90,15 @@ class App extends React.Component{
 				<div>
 					<Page0
 						page={this.state.page}
-						set_ask_tr={this.set_ask_tr}
-						set_page_to_1={this.set_page_to_1}
+						set_ask_tr={this.setAskTr}
+						set_page_to_1={this.setPageTo1}
+						config={this.config}
 					/>
 					<Page1
 						page={this.state.page}
 						transcribtion={this.state.transcribtion}
-						ask_tr={this.state.ask_tr}
-						set_transcribtion={this.set_transcribtion}
+						ask_tr={this.state.askTr}
+						set_transcribtion={this.setTranscribtion}
 					/>
 				</div>
 			</MuiThemeProvider>

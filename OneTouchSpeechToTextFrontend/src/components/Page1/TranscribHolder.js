@@ -4,9 +4,6 @@ import TextField from '@material-ui/core/TextField';
 const helper="result of transcribtion"
 
 export class TranscribHolder extends React.Component {
-  constructor(props) {
-    super(props);
-  }
   render() {
     if(this.props.loading===false){
       return (
