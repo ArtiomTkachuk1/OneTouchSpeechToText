@@ -45,20 +45,9 @@ def set_to_silero(audio_name):
 
 def load_args(path_to_args):
     with open(path_to_args) as json_file:
-        data = json.load(json_file)
-        x=data['t_model'].split("/")
-        data['t_model']=x[0]
-        if(len(x)>1):
-            if(x[1]=="en"):
-                data['language']="English"
-            if(x[1]=="de"):
-                data['language']="German"
-            if(x[1]=="es"):
-                data['language']="Spanish"
-        else:
-            data['language']=None
+        data = json.loads(json_file.read());
         data['sec']=None
         data['t_model_file']=None
         data['t_scorer_file']=None
-        data = Struct(**data)
-        return data
+        new_data = Struct(**data)
+        return new_data

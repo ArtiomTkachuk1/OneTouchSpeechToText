@@ -109,6 +109,9 @@ export function Page0(props) {
 				let lth=secondarySelects[chosenMainOption].length;
 				for(let i=0;i<lth;i++){
 					let key=secondarySelects[chosenMainOption][i];
+					if(key.search(" ") !== -1){
+						key=key.replace(" ","_")
+					}
 					let value=secondaryOptions[chosenMainOption][chosenSecondaryOptions[i]][0]
 					console.log(key,value)
 					con.push({

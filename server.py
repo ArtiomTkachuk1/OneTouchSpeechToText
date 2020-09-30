@@ -31,10 +31,13 @@ def download_audio(link,upload_path):
 
 def concat_and_save(path,name,path_to_audio,data):
     audio={"audio":path_to_audio}
-    data.update(audio)
+    data.append(audio)
+    new_data={}
+    for i in data:
+        new_data.update(i)
     settings_path=os.path.join(path,name);
     with open(settings_path, 'w') as json_file:
-        json.dump(data, json_file);
+        json.dump(new_data, json_file);
 
 
 template_folder=os.path.join("OneTouchSpeechToTextFrontend","build")
@@ -61,11 +64,11 @@ def upload_file_from_form():
     file_path=os.path.join(app.config['DATA_FOLDER'],filename);
     file.save(file_path);
     settings = json.load(request.files['settings']);
-    original_name={"original_name":file.filename}
-    settings.update(original_name)
+    original_name={"original_name":file.filename};
+    settings.append(original_name);
     concat_and_save(app.config['DATA_FOLDER'], settings_name, file_path, settings);
-    app.config['DATA_FOLDER']
-    print("Data saved")
+    app.config['DATA_FOLDER'];
+    print("Data saved");
     return("OK");
 
 @app.route('/file_from_ref', methods=['POST'])
@@ -80,12 +83,23 @@ def upload_file_from_ref():
 
 @app.route('/get_transcribtion',methods=['GET'])
 #@cross_origin()#origin='*',headers=['Access-Control-Allow-Origin'])
-def return_data():
+def return_transcribtion():
     settings_path=os.path.join(app.config['DATA_FOLDER'], settings_name);
     result=core(settings_path)
     result=jsonify(result)
     result.headers.add("Access-Control-Allow-Origin", "*")
     return(result)
+
+@app.route('/get_config',methods=['GET'])
+#@cross_origin()#origin='*',headers=['Access-Control-Allow-Origin'])
+def return_config():
+    config_path="config.json";
+    with open(config_path) as json_file:
+        config=json.loads(json_file.read())
+    config=jsonify(config)
+    config.headers.add("Access-Control-Allow-Origin", "*")
+    return(config)
+
 
 print(app.url_map)
 print('Starting Flask!')

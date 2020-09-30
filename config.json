@@ -1,0 +1,18 @@
+{
+  "English": {
+    "Transcribe model": [
+      "DeepSpeech",
+      "Vosk"
+    ]
+  },
+  "German": {
+    "Transcribe model": [
+      "Silero"
+    ]
+  },
+  "Spanish": {
+    "Transcribe model": [
+      "Silero"
+    ]
+  }
+}

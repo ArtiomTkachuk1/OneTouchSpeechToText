@@ -26,30 +26,8 @@ const theme = createMuiTheme({
 class App extends React.Component{
 	constructor(props) {
 		super(props);
-		this.config={
-		  "English": {
-		    "Transcribe model": [
-		      "DeepSpeech",
-		      "Vosk",
-		      "Silero"
-		    ],
-		    "Diagization model": [
-		      "Kaldi",
-		      "Payonette"
-		    ],
-		    "Spellchecker": [
-		      "Spellchecker1",
-		      "Spellchecker2"
-		    ]
-		  },
-		  "German": {
-		    "Transcribe model": [
-		      "Silero"
-		    ]
-		  }
-		}
 		this.state = {
-			page:0,
+			page:-1,
 			transcribtion:"",
 			askTr:false,
 			config:{}
@@ -95,14 +73,14 @@ class App extends React.Component{
 			<MuiThemeProvider theme={theme}>
 				<div>
 					<Init
-						setConfig={this.state.setConfig}
+						setConfig={this.setConfig}
 						setPageTo0={this.setPageTo0}
 					/>
 					<Page0
 						page={this.state.page}
 						set_ask_tr={this.setAskTr}
 						set_page_to_1={this.setPageTo1}
-						config={this.config}
+						config={this.state.config}
 					/>
 					<Page1
 						page={this.state.page}

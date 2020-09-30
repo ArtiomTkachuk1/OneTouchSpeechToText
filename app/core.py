@@ -18,7 +18,7 @@ from .corrector.corrector import correct
 
 
 class Transcribe_Model:
-    list_of_models=["deepspeech","silero"]
+    list_of_models=["DeepSpeech","Silero"]
     path_to_models=fix_path("t_models")
     path_to_data="data"
     def __init__(self, args):
@@ -62,41 +62,17 @@ class Transcribe_Model:
         return(result)
 
 
-def parse_args():
-    """ Parse and return dictionary of the arguments """
-    ap = argparse.ArgumentParser()
-    ap.add_argument("-i", "--audio", required=True,
-                    help="the path to input audio or stream")
-    ap.add_argument("-t", "--t_model", default="silero",
-                    help="model for transcribing")
-    ap.add_argument("-tf", "--t_model_file",
-                    help="specific name of weight file")
-    ap.add_argument("-ts", "--t_scorer_file",
-                    help="specific name of scorer file")
-    ap.add_argument("-ln", "--language", default="English",
-                    help="language")
-    ap.add_argument("-d", "--d_model", default="kaldi",
-                    help="model for diagization")
-    ap.add_argument("-s", "--sec", type=int, default=None,
-                    help="maximum number of the seconds to process")
-    args = ap.parse_args()
-    return args
-
-
 def core(path_to_args):
-    #args = parse_args()
-    print(path_to_args)
     time=datetime.now()
     args=load_args(path_to_args)
     time=monitor("args loaded",time)
-    print(args.audio,args.t_model)
     args.audio=convert_to_wav(args.audio)
     cut(args.sec, args.audio)
     path_to_corrector=fix_path("corrector")
     time=monitor("Utils done",time)
     args_for_t_model={'audio': args.audio,
-                      'language': args.language,
-                      't_model': args.t_model,
+                      'language': args.Language,
+                      't_model': args.Transcribe_model,
                       'model_file': args.t_model_file,
                       'scorer_file': args.t_scorer_file}
     args_for_t_model = Struct(**args_for_t_model)
