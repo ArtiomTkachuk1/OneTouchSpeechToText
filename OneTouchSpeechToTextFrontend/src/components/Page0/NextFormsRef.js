@@ -75,7 +75,6 @@ export function NextFormsRef(props) {
 				});
 				formData.append("settings", blob);
 				props.set_page_to_1();
-				console.log(data);
 				postreq(formData);
 			}
 		}

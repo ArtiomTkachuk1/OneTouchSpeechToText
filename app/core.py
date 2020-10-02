@@ -11,7 +11,7 @@ from .utils import (cut,
                     Struct)
 from .t_models.deepspeech import deepspeech
 from .t_models.silero import silero
-frotm th_models.vosk import vosk
+from .t_models.vosk import vosk_app
 from .corrector.corrector import correct
 '''class Struct:
     def __init__(self, **entries):
@@ -48,7 +48,7 @@ class Transcribe_Model:
         if args.model_file is None:
             args.model_file=self.path_to_models
         self.args=args
-    
+
     def init_vosk(self,args):
         default_language="English"
         if args.language is None:
@@ -62,7 +62,7 @@ class Transcribe_Model:
             return(self.deepspeech_result())
         if(self.args.t_model==self.list_of_models[1]):
             return(self.silero_result())
-        if(args.t_model==self.list_of_models[2]):
+        if(self.args.t_model==self.list_of_models[2]):
             return(self.vosk_result())
 
     def deepspeech_result(self):
@@ -74,7 +74,7 @@ class Transcribe_Model:
         return(result)
 
     def vosk_result(self):
-        result=vosk.main(self.args)
+        result=vosk_app.main(self.args)
         return(result)
 
 

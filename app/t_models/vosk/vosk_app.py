@@ -1,7 +1,5 @@
 import json
-
-#import pyaudio
-import pydub
+import os
 from vosk import Model, KaldiRecognizer
 
 def audio_speech_recognition(model_path, audio_path):
@@ -38,6 +36,6 @@ def audio_speech_recognition(model_path, audio_path):
         return result
 
 def main(args):
-    model_path=os.path.join(args.path_to_models,"vosk","data",args.language)
+    model_path=os.path.join(args.model_file,"vosk","data",args.language,"model")
     text=audio_speech_recognition(model_path,args.audio)
     return text

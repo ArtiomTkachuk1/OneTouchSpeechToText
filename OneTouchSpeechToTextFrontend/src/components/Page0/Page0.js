@@ -99,7 +99,6 @@ export function Page0(props) {
 			let check=true;
 			let lth=chosenSecondaryOptions.length;
 			for(let i =0;i<lth;i++){
-				console.log(i)
 				if(chosenSecondaryOptions[i]===''){
 					check=false;
 					break;
@@ -112,8 +111,7 @@ export function Page0(props) {
 					if(key.search(" ") !== -1){
 						key=key.replace(" ","_")
 					}
-					let value=secondaryOptions[chosenMainOption][chosenSecondaryOptions[i]][0]
-					console.log(key,value)
+					let value=secondaryOptions[chosenMainOption][0][chosenSecondaryOptions[i]]
 					con.push({
 					    [key]:value,
 					});
