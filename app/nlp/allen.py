@@ -24,3 +24,4 @@ def run(text):
     return qa_result
 
 text="I installed everything wigh GPU usage. I wrote installation guide. I add vosk model. Frontend was reconfigured"
+run(text)
