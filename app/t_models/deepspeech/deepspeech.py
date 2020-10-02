@@ -118,7 +118,7 @@ def main(args):
     # sphinx-doc: python_ref_model_stop
     model_load_end = timer() - model_load_start
     print('Loaded model in {:.3}s.'.format(model_load_end), file=sys.stderr)
-
+    #ds.setBeamWidth(3)
     '''if args.beam_width:
         ds.setBeamWidth(args.beam_width)'''
 
@@ -130,7 +130,7 @@ def main(args):
         ds.enableExternalScorer(args.scorer)
         scorer_load_end = timer() - scorer_load_start
         print('Loaded scorer in {:.3}s.'.format(scorer_load_end), file=sys.stderr)
-
+        #ds.setScorerAlphaBeta(0.5, 0.5)
         '''if args.lm_alpha and args.lm_beta:
             ds.setScorerAlphaBeta(args.lm_alpha, args.lm_beta)'''
 
@@ -160,6 +160,7 @@ def main(args):
     result1 = ds.stt(audio)
     result2 = metadata_to_string(ds.sttWithMetadata(audio, 1).transcripts[0])
     result3 = metadata_json_output(ds.sttWithMetadata(audio, 3))
+    print(result3)
     return(result1, result2, result3)
 
 if __name__ == '__main__':

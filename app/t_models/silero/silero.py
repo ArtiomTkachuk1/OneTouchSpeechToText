@@ -20,7 +20,7 @@ def main(args):
         model, decoder = init_jit_model(models.stt_models.es.latest.jit, device=device)
     else:
         model, decoder = init_jit_model(models.stt_models.en.latest.jit, device=device)
-    test_file = [args.audio]#glob("audio/*.wav") # replace with your data
+    test_file = [args.audio]
     batches = split_into_batches(test_file, batch_size=10)
     input = prepare_model_input(read_batch(batches[0]),
                             device=device)

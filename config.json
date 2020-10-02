@@ -2,7 +2,7 @@
   "English": {
     "Transcribe model": [
       "DeepSpeech",
-      "Vosk"
+      "Silero"
     ]
   },
   "German": {
@@ -13,6 +13,21 @@
   "Spanish": {
     "Transcribe model": [
       "Silero"
+    ]
+  },
+  "Italian": {
+    "Transcribe model": [
+      "Vosk"
+    ]
+  },
+  "Russian": {
+    "Transcribe model": [
+      "Vosk"
+    ]
+  },
+  "Chinese": {
+    "Transcribe model": [
+      "Vosk"
     ]
   }
 }

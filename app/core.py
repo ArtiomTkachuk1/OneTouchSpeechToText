@@ -11,6 +11,7 @@ from .utils import (cut,
                     Struct)
 from .t_models.deepspeech import deepspeech
 from .t_models.silero import silero
+frotm th_models.vosk import vosk
 from .corrector.corrector import correct
 '''class Struct:
     def __init__(self, **entries):
@@ -18,7 +19,7 @@ from .corrector.corrector import correct
 
 
 class Transcribe_Model:
-    list_of_models=["DeepSpeech","Silero"]
+    list_of_models=["DeepSpeech","Silero","Vosk"]
     path_to_models=fix_path("t_models")
     path_to_data="data"
     def __init__(self, args):
@@ -26,6 +27,8 @@ class Transcribe_Model:
             self.init_deepspeech(args)
         if(args.t_model==self.list_of_models[1]):
             self.init_silero(args)
+        if(args.t_model==self.list_of_models[2]):
+            self.init_vosk(args)
 
     def init_deepspeech(self,args):
         default_model_file="deepspeech-0.8.1-models.pbmm"
@@ -45,20 +48,33 @@ class Transcribe_Model:
         if args.model_file is None:
             args.model_file=self.path_to_models
         self.args=args
+    
+    def init_vosk(self,args):
+        default_language="English"
+        if args.language is None:
+            args.language=default_language
+        if args.model_file is None:
+            args.model_file=self.path_to_models
+        self.args=args
 
     def run(self):
         if(self.args.t_model==self.list_of_models[0]):
             return(self.deepspeech_result())
         if(self.args.t_model==self.list_of_models[1]):
             return(self.silero_result())
+        if(args.t_model==self.list_of_models[2]):
+            return(self.vosk_result())
 
     def deepspeech_result(self):
         result1,result2,result3=deepspeech.main(self.args)
         return(result1)
 
     def silero_result(self):
-        set_to_silero(self.args.audio)
         result=silero.main(self.args)
+        return(result)
+
+    def vosk_result(self):
+        result=vosk.main(self.args)
         return(result)
 
 
